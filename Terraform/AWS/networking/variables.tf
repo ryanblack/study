@@ -1,5 +1,7 @@
 # ==== networking/variables.tf ====
 
-variable "vpc_cidr" {
-   default = "192.168.7.0/24"
+variable "vpc_cidr" {}
+variable "public_cidrs" {
+   type = "list"
 }
+variable "accessip" {}
