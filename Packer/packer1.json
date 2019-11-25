@@ -1,0 +1,39 @@
+{
+  "variables": {
+    "instance_size": "t2.small",
+    "ami_name": "ami-stas",
+    "base_ami": "ami-0c5204531f799e0c6",
+    "ssh_username": "ec2-user",
+    "vpc_id": "vpc-03addc64",
+    "subnet_id": "subnet-1c4fc67b"
+  },
+  "builders": [
+   {  
+    "type": "amazon-ebs",
+    "region": "us-west-2",
+    "source_ami": "{{user `base_ami`}}",
+    "instance_type": "{{user `instance_size`}}",
+    "ssh_username": "{{user `ssh_username`}}",
+    "ssh_timeout": "20m",
+    "ami_name": "{{user `ami_name`}}",
+    "ssh_pty": "true",
+    "vpc_id": "{{user `vpc_id`}}",
+    "subnet_id": "{{user `subnet_id`}}",
+    "tags": {
+      "Name": "App Name",
+      "BuiltBy": "Packer",
+      "Validated": "No"
+    }
+   }
+  ],
+  "description": "AWS Image",
+  "provisioners": [
+    {
+      "type": "shell",
+      "inline": [
+        "sudo yum update -y",
+        "sudo yum install -y git"
+      ]
+    }
+  ]
+}
